@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Relatório Mensal de Monitoria - IFPB</title>
+  <link rel="stylesheet" href="../css/cadastro-relatorio.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>IFPB - Campus Esperança</h1>
+        <p>Sistema de Automação de Relatórios Mensais de Monitoria</p>
+      </div>
+      <div>
+        <span><strong>Curso:</strong> ADS</span>
+      </div>
+    </header>
+
+    <form id="relatorioForm">
+      <!-- Seção 1: Identificação do Relatório -->
+      <div class="card">
+        <h2>1. Dados de Identificação</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="mesAno">Mês / Ano Ref.:</label>
+            <input type="month" id="mesAno" value="2026-05" required>
+          </div>
+
+          <div class="form-group">
+            <label for="disciplina">Componente Curricular:</label>
+            <select id="disciplina" required onchange="atualizarDocente()">
+              <option value="">Selecione a Disciplina...</option>
+              <option value="Matemática Aplicada à Computação" data-codigo="TEC.1984" data-docente="Suemilton Nunes Gervázio">Matemática Aplicada à Computação</option>
+              <option value="Algoritmos e Lógica de Programação" data-codigo="TEC.1980" data-docente="Andre Atanasio Maranhao Almeida">Algoritmos e Lógica de Programação</option>
+              <option value="Desenvolvimento de Aplicações Web I" data-codigo="34" data-docente="Jaindson Valentim Santana">Desenvolvimento de Aplicações Web I</option>
+              <option value="Programação Orientada a Objetos" data-codigo="25" data-docente="Antonio Dias dos Santos Júnior">Programação Orientada a Objetos</option>
+              <option value="Probabilidade e Estatística" data-codigo="24" data-docente="Suemilton Nunes Gervázio">Probabilidade e Estatística</option>
+              <option value="Desenvolvimento de Aplicações Web II" data-codigo="43" data-docente="Jaindson Valentim Santana">Desenvolvimento de Aplicações Web II</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="monitor">Nome do Monitor:</label>
+            <input type="text" id="monitor" placeholder="Nome completo" required>
+          </div>
+
+          <div class="form-group">
+            <label for="professor">Professor Orientador:</label>
+            <input type="text" id="professor" placeholder="Selecione a disciplina" readonly>
+          </div>
+
+          <div class="form-group">
+            <label for="chSemanal">Carga Horária Semanal (h):</label>
+            <input type="number" id="chSemanal" value="8" required>
+          </div>
+
+          <div class="form-group">
+            <label for="chMensal">Carga Horária Mensal (h):</label>
+            <input type="number" id="chMensal" value="28" required>
+          </div>
+
+          <!-- Seleção Dinâmica de Dias e Intervalos de Horários -->
+          <div class="form-group full-width">
+            <label>Dias e Horários da Monitoria:</label>
+            <div class="dias-horarios-grid">
+              
+              <div class="dia-row">
+                <label class="check-label">
+                  <input type="checkbox" class="chk-dia" value="Segunda-feira" onchange="toggleHorario(this)"> Segunda-feira
+                </label>
+                <div class="time-inputs">
+                  <span>Início:</span>
+                  <input type="time" class="time-inicio" value="08:00" disabled>
+                  <span>Término:</span>
+                  <input type="time" class="time-fim" value="12:20" disabled>
+                </div>
+              </div>
+
+              <div class="dia-row">
+                <label class="check-label">
+                  <input type="checkbox" class="chk-dia" value="Terça-feira" onchange="toggleHorario(this)"> Terça-feira
+                </label>
+                <div class="time-inputs">
+                  <span>Início:</span>
+                  <input type="time" class="time-inicio" value="08:00" disabled>
+                  <span>Término:</span>
+                  <input type="time" class="time-fim" value="12:20" disabled>
+                </div>
+              </div>
+
+              <div class="dia-row">
+                <label class="check-label">
+                  <input type="checkbox" class="chk-dia" value="Quarta-feira" onchange="toggleHorario(this)"> Quarta-feira
+                </label>
+                <div class="time-inputs">
+                  <span>Início:</span>
+                  <input type="time" class="time-inicio" value="08:00" disabled>
+                  <span>Término:</span>
+                  <input type="time" class="time-fim" value="12:20" disabled>
+                </div>
+              </div>
+
+              <div class="dia-row">
+                <label class="check-label">
+                  <input type="checkbox" class="chk-dia" value="Quinta-feira" onchange="toggleHorario(this)"> Quinta-feira
+                </label>
+                <div class="time-inputs">
+                  <span>Início:</span>
+                  <input type="time" class="time-inicio" value="08:00" disabled>
+                  <span>Término:</span>
+                  <input type="time" class="time-fim" value="12:20" disabled>
+                </div>
+              </div>
+
+              <div class="dia-row">
+                <label class="check-label">
+                  <input type="checkbox" class="chk-dia" value="Sexta-feira" onchange="toggleHorario(this)"> Sexta-feira
+                </label>
+                <div class="time-inputs">
+                  <span>Início:</span>
+                  <input type="time" class="time-inicio" value="08:00" disabled>
+                  <span>Término:</span>
+                  <input type="time" class="time-fim" value="12:20" disabled>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção 2: Registro Diário de Atividades -->
+      <div class="card">
+        <h2>2. Lançamento Diário de Atividades</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="dataAtividade">Data:</label>
+            <input type="date" id="dataAtividade">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="planejamento">Planejamento das Atividades:</label>
+            <input type="text" id="planejamento" placeholder="Ex: Fundamentos algébricos básicos e funções.">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="atividadesRealizadas">Atividades Efectivamente Realizadas:</label>
+            <textarea id="atividadesRealizadas" rows="2" placeholder="Ex: Revisão detalhada de conceitos e propriedades de potência e radiciação."></textarea>
+          </div>
+        </div>
+        <button type="button" class="btn-add" onclick="adicionarAtividade()">+ Adicionar Atividade ao Relatório</button>
+      </div>
+
+      <!-- Seção 3: Tabela de Atividades Adicionadas -->
+      <div class="card">
+        <h2>3. Atividades Registradas no Relatório</h2>
+        <table id="tabelaAtividades">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Data</th>
+              <th style="width: 35%;">Planejamento</th>
+              <th style="width: 40%;">Atividades Realizadas</th>
+              <th style="width: 10%;">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="corpoTabela">
+            <tr id="linhaVazia">
+              <td colspan="4" class="empty-msg">Nenhuma atividade inserida até o momento.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="actions">
+          <button type="submit">Salvar e Gerar Relatório</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lógica e Manipulação do DOM com JavaScript -->
+  <script src="../js/cadastro-relatorio.js">
+    
+  </script>
+</body>
+</html>
